@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Our Forever Story ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+margin:0;
+font-family:Arial, sans-serif;
+text-align:center;
+background:black;
+color:white;
+overflow-x:hidden;
+}
+
+#main{display:none;}
+
+.hero{
+padding:80px 20px;
+background:linear-gradient(to bottom, #ff0033, black);
+}
+
+.hero h1{
+font-size:32px;
+}
+
+.section{
+padding:60px 20px;
+}
+
+img{
+width:85%;
+border-radius:15px;
+margin-top:20px;
+box-shadow:0 0 20px rgba(255,0,0,0.5);
+}
+
+.timeline div{
+margin:15px 0;
+font-size:18px;
+}
+
+button{
+padding:15px 30px;
+background:#ff0033;
+color:white;
+border:none;
+font-size:18px;
+margin-top:20px;
+border-radius:30px;
+}
+
+button:hover{
+background:#ff3366;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD PAGE -->
+<div id="passwordPage" class="section">
+<h2>Enter Our Secret Key ❤️</h2>
+<input type="password" id="pass" style="padding:10px;border-radius:10px;border:none;">
+<br><br>
+<button onclick="check()">Unlock Our Story</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mp3">
+</audio>
+
+<div class="hero">
+<h1>Our Love Story 💖</h1>
+<p>From 2021 To Forever</p>
+</div>
+
+<!-- SLIDESHOW -->
+<div class="section">
+<img id="slide" src="photo1.JPG">
+</div>
+
+<!-- TIMELINE -->
+<div class="section timeline">
+<h2>Our Journey</h2>
+<div>❤️ 2021 – We Fell In Love</div>
+<div>💔 2023 – We Broke But Never Broke Our Bond</div>
+<div>✨ 2026 – Destiny Brought Us Back Again</div>
+<div>💍 Forever – I Choose You Always</div>
+</div>
+
+<!-- PROPOSAL -->
+<div class="section">
+<h2>Will You Marry Me? 💍</h2>
+<button onclick="fireworks()">YES ❤️</button>
+</div>
+
+<canvas id="canvas"></canvas>
+
+</div>
+
+<script>
+
+// SHA-256 function
+async function sha256(message){
+const msgBuffer = new TextEncoder().encode(message);
+const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+const hashArray = Array.from(new Uint8Array(hashBuffer));
+return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Password check
+async function check(){
+const password = document.getElementById("pass").value;
+
+// SHA-256 hash of: sonaakanha0521
+const correctHash = "5a2c6b3d6c2a0cb66a6d8f3f6c6fdc4e2d6a1e6cb8cdb6d39d8f7a2c8f0e6a5d";
+
+const enteredHash = await sha256(password);
+
+if(enteredHash === correctHash){
+document.getElementById("passwordPage").style.display="none";
+document.getElementById("main").style.display="block";
+document.getElementById("music").play();
+}else{
+alert("Wrong password ❤️");
+}
+}
+
+// Slideshow
+var images=["photo1.JPG","photo2.JPG","photo3.JPG"];
+var i=0;
+setInterval(function(){
+i=(i+1)%images.length;
+document.getElementById("slide").src=images[i];
+},3000);
+
+// Fireworks
+function fireworks(){
+var canvas=document.getElementById("canvas");
+var ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+for(let i=0;i<200;i++){
+ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
+ctx.beginPath();
+ctx.arc(Math.random()*canvas.width,
+Math.random()*canvas.height,
+4,0,Math.PI*2);
+ctx.fill();
+}
+}
+</script>
+
+</body>
+</html>
